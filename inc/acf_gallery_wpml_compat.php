@@ -1,6 +1,5 @@
 <?php
 
-
 class acf_gallery_wpml_compat
 {
   public function __construct($postID)
