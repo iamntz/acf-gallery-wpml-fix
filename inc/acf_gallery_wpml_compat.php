@@ -5,12 +5,7 @@ class acf_gallery_wpml_compat
   public function __construct($postID)
   {
     $this->postID = $postID;
-
-    if ($this->postID == 0 || !function_exists('have_rows') || !function_exists('icl_object_id')) {
-      return;
-    }
-
-    add_action('wpml_updated_translation_status', array($this, 'parse_post_fields'));
+    add_action('wpml_updated_translation_status', array($this, 'parse_post_fields'), 50);
   }
 
   /**
@@ -20,12 +15,12 @@ class acf_gallery_wpml_compat
    *
    * @return void
    */
-  public function parse_post_fields()
+  public function parse_post_fields($data = array())
   {
     $groups = acf_get_field_groups();
+
     foreach ($groups as $group) {
-      $fields = acf_get_fields($group);
-      $this->iterate_fields($fields);
+      $this->iterate_fields(acf_get_fields($group));
     }
   }
 
